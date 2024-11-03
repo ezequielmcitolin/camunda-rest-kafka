@@ -59,11 +59,9 @@ jobs:
           
   deploy:
     runs-on: ubuntu-latest
-
+    if: github.ref == 'refs/heads/main'
     needs: publica_container
-
     steps:
-    
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@85270a1854658d167ab239bce43949edb336fa7c
@@ -71,4 +69,3 @@ jobs:
           app-name: camunda-rest-kafka-ezequiel-ufrgs01
           publish-profile: ${{ secrets.AZUREWEBAPPPUBLISHPROFILE }}
           images: ezequielmcitolin/camunda-rest-kafka:${{ github.sha }}
-
