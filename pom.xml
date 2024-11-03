@@ -2,36 +2,45 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>br.ufrgs.ecd11</groupId>
-  <artifactId>camunda-rest-kafka</artifactId>
+  <groupId>com.bempromotora.retencao</groupId>
+  <artifactId>reguarelacionamento</artifactId>
   <version>1.0.0-SNAPSHOT</version>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
+    <spring-boot.version>2.2.6.RELEASE</spring-boot.version>
+    <azure.version>2.2.4</azure.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
-      <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-dependencies</artifactId>
-        <version>3.3.3</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
+	  <dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-dependencies</artifactId>
+	    <version>3.2.2</version>
+	    <type>pom</type>
+	    <scope>import</scope>
+	  </dependency>
+	
+	  <dependency>
+	    <groupId>org.camunda.bpm</groupId>
+	    <artifactId>camunda-bom</artifactId>
+	    <version>7.21.0</version>
+	    <scope>import</scope>
+	    <type>pom</type>
+	  </dependency>
 
-      <dependency>
-        <groupId>org.camunda.bpm</groupId>
-        <artifactId>camunda-bom</artifactId>
-        <version>7.22.0</version>
-        <scope>import</scope>
-        <type>pom</type>
-      </dependency>
+	  <dependency>
+	    <groupId>com.azure.spring</groupId>
+	    <artifactId>spring-cloud-azure-dependencies</artifactId>
+	    <version>4.6.0</version>
+	    <type>pom</type>
+	    <scope>import</scope>
+	  </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -46,6 +55,12 @@
       <artifactId>camunda-bpm-spring-boot-starter-webapp</artifactId>
     </dependency>
 
+    <dependency>
+        <groupId>com.sun.xml.bind</groupId>
+        <artifactId>jaxb-impl</artifactId>
+        <version>2.2.3</version>
+    </dependency>
+    
     <dependency>
       <groupId>org.camunda.bpm</groupId>
       <artifactId>camunda-engine-plugin-spin</artifactId>
@@ -62,25 +77,30 @@
     </dependency>
 
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-security</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-
-    <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
     </dependency>
+
+	<dependency>
+	    <groupId>com.microsoft.sqlserver</groupId>
+	    <artifactId>mssql-jdbc</artifactId>
+	    <version>12.4.0.jre8</version>
+	</dependency>
+
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-jdbc</artifactId>
     </dependency>
-   	
+    
+    <!-- https://mvnrepository.com/artifact/org.springframework.kafka/spring-kafka -->
+	<dependency>
+	    <groupId>org.springframework.kafka</groupId>
+	    <artifactId>spring-kafka</artifactId>
+	    <version>3.1.1</version>
+	</dependency>
+
+    <!-- https://projectlombok.org/setup/maven -->
    	<dependency>
 		<groupId>org.projectlombok</groupId>
 		<artifactId>lombok</artifactId>
@@ -88,6 +108,31 @@
 		<scope>provided</scope>
 	</dependency>
 	
+	<!--
+	    <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-security</artifactId>
+	    </dependency>
+	
+	    <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-web</artifactId>
+	    </dependency>
+	
+	    <dependency>
+	        <groupId>com.azure.spring</groupId>
+	        <artifactId>spring-cloud-azure-starter-active-directory</artifactId>
+	    </dependency>
+	
+	    <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-oauth2-client</artifactId>
+	    </dependency>
+	    
+    -->
+    
+	
+    
   </dependencies>
 
   <build>
@@ -95,7 +140,24 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>3.3.3</version>
+        <version>3.2.2</version>        
+        <configuration>
+          <layout>ZIP</layout>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>1.18.30</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+        <executions>
+            <execution>
+                <goals>
+                    <goal>repackage</goal>
+                </goals>
+            </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

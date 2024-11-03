@@ -23,5 +23,5 @@ COPY --from=build /app/target/*.jar app.jar
 # A aplicação rodará na porta 80
 EXPOSE 8080
 
-# Execução do Entrypoint da aplicação
+# Execução do Entrypoint da
 ENTRYPOINT ["java","-jar","app.jar"]
