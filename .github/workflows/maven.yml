@@ -35,9 +35,10 @@ jobs:
     - name: Update dependency graph
       uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
 
-  push_to_registry:
+  publica_container:
     name: Publica a Imagem atualizada
     runs-on: ubuntu-latest
+    needs: test
     steps:
       - name: Checkout Repositório
         uses: actions/checkout@v3
