@@ -52,5 +52,6 @@ jobs:
       - name: Constrói e publica a imagem 
         uses: docker/build-push-action@v2
         with:
-          push: true:${{ github.sha }}
+          push: true:
+          tags: camunda-rest-kafka:${{ github.sha }}
           file: ./Dockerfile
