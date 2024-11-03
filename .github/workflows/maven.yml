@@ -34,6 +34,7 @@ jobs:
   publica_container:
     name: Publica a Imagem atualizada
     runs-on: ubuntu-latest
+    environment: Docker
     needs: test
     steps:
       - name: Checkout Repositório
