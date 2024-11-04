@@ -24,7 +24,7 @@ Branchs:
 3. release/<dataRelease>: Código gerdo e travado para um conjunto de publicações realizadas.
 4. main -> Código que está em produção e deve ser tageado para ser gerado a versão de build para o ambiente de produção.
 
-* Criada regra para considerar as regras para as branchs de dev, release e main para não permitir commit direto.
+* Criada regra para considerar as permissões para as branchs de dev, release e main não permitindo commit direto por exemplo, bem como revisores e outras partes do processo..
 
 # Publicação
 
